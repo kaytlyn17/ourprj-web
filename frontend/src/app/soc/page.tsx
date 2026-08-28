@@ -4,6 +4,7 @@ import AlertCard from "@/components/soc/AlertCard";
 import ArchitectureDiagram from "@/components/soc/ArchitectureDiagram";
 import DetectionTable from "@/components/soc/DetectionTable";
 import MetricCard from "@/components/soc/MetricCard";
+import PageHeader from "@/components/layout/PageHeader";
 
 import {
   detections,
@@ -20,26 +21,15 @@ export const metadata: Metadata = {
 export default function SocPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-        <div className="max-w-3xl">
-          <p className="font-mono text-sm text-zinc-500">
-            SECURITY OPERATIONS
-          </p>
-
-          <h1 className="mt-4 text-5xl font-bold tracking-tight text-white sm:text-6xl">
-            SOC Home Lab.
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
-            A virtualized environment for learning security monitoring,
-            network visibility, detection engineering and incident analysis.
-          </p>
-
-          <div className="mt-8 inline-flex rounded-full border border-zinc-800 bg-zinc-900 px-4 py-2 font-mono text-xs text-zinc-500">
-            DEMO DATA · LIVE INTEGRATION COMING LATER
-          </div>
+      <PageHeader
+        eyebrow="SECURITY OPERATIONS"
+        title="SOC Home Lab."
+        description="A virtualized environment for learning security monitoring, network visibility, detection engineering and incident analysis."
+      >
+        <div className="mt-8 inline-flex rounded-full border border-zinc-800 bg-zinc-900 px-4 py-2 font-mono text-xs text-zinc-500">
+          DEMO DATA · LIVE INTEGRATION COMING LATER
         </div>
-      </section>
+      </PageHeader>
 
       <section className="border-t border-zinc-800">
         <div className="mx-auto max-w-6xl px-6 py-20">

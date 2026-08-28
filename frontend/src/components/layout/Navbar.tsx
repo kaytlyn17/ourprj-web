@@ -1,5 +1,40 @@
 import Link from "next/link";
 
+const navLinks = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Profile",
+    href: "/profile",
+  },
+  {
+    label: "Projects",
+    href: "/projects",
+  },
+  {
+    label: "SOC",
+    href: "/soc",
+  },
+  {
+    label: "Labs",
+    href: "/labs",
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+  },
+  {
+    label: "Docs",
+    href: "/docs",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
+
 export default function Navbar() {
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
@@ -11,30 +46,16 @@ export default function Navbar() {
           ourprj
         </Link>
 
-        <div className="flex flex-wrap gap-5 text-sm text-zinc-400">
-          <Link href="/" className="transition hover:text-white">
-            Home
-          </Link>
-
-          <Link href="/profile" className="transition hover:text-white">
-            Profile
-          </Link>
-
-          <Link href="/projects" className="transition hover:text-white">
-            Projects
-          </Link>
-
-          <Link href="/soc" className="transition hover:text-white">
-            SOC
-          </Link>
-
-          <Link href="/labs" className="transition hover:text-white">
-            Labs
-          </Link>
-
-          <Link href="/blog" className="transition hover:text-white">
-            Blog
-          </Link>
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-400">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </nav>
     </header>
