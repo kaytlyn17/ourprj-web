@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { projects } from "@/content/projects/data";
+import { getProjectBySlug } from "@/lib/api";
+import { formatProjectStatus } from "@/lib/utils";
 
 type ProjectPageProps = {
   params: Promise<{
@@ -10,20 +11,13 @@ type ProjectPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const project = projects.find(
-    (project) => project.slug === slug
-  );
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -42,9 +36,7 @@ export default async function ProjectPage({
 }: ProjectPageProps) {
   const { slug } = await params;
 
-  const project = projects.find(
-    (project) => project.slug === slug
-  );
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -67,7 +59,7 @@ export default async function ProjectPage({
             </p>
 
             <span className="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">
-              {project.status}
+              {formatProjectStatus(project.status)}
             </span>
           </div>
 

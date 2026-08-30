@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import type { Project } from "@/types/project";
+import type { ProjectSummary } from "@/types/project";
+import { formatProjectStatus } from "@/lib/utils";
 
 type ProjectCardProps = {
-  project: Project;
+  project: ProjectSummary;
 };
 
 export default function ProjectCard({
@@ -20,7 +21,7 @@ export default function ProjectCard({
         </p>
 
         <span className="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">
-          {project.status}
+          {formatProjectStatus(project.status)}
         </span>
       </div>
 

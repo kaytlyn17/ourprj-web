@@ -1,9 +1,10 @@
 import ProjectCard from "@/components/projects/ProjectCard";
 
-import type { Project } from "@/types/project";
+import type { ProjectSummary } from "@/types/project";
+
 
 type ProjectGridProps = {
-  projects: Project[];
+  projects: ProjectSummary[];
 };
 
 export default function ProjectGrid({

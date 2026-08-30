@@ -1,9 +1,11 @@
 import ProjectGrid from "@/components/projects/ProjectGrid";
 import PageHeader from "@/components/layout/PageHeader";
 
-import { projects } from "@/content/projects/data";
+import { getProjects } from "@/lib/api";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
   return (
     <>
       <PageHeader
