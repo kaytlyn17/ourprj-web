@@ -1,4 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from app.db.session import get_db
 
 from app.schemas.project import (
     ProjectDetailResponse,
@@ -15,13 +20,19 @@ router = APIRouter(
     tags=["Projects"],
 )
 
+DatabaseSession = Annotated[
+    Session,
+    Depends(get_db),
+]
 
 @router.get(
     "",
     response_model=ProjectListResponse,
 )
-async def list_projects() -> ProjectListResponse:
-    projects = get_all_projects()
+async def list_projects(
+    db: DatabaseSession,
+) -> ProjectListResponse:
+    projects = get_all_projects(db)
 
     return ProjectListResponse(
         data=projects,
@@ -35,8 +46,12 @@ async def list_projects() -> ProjectListResponse:
 )
 async def read_project(
     slug: str,
+    db: DatabaseSession,
 ) -> ProjectDetailResponse:
-    project = get_project_by_slug(slug)
+    project = get_project_by_slug(
+        db,
+        slug,
+    )
 
     if project is None:
         raise HTTPException(
