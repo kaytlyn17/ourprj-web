@@ -1,10 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, Path, status
 from sqlalchemy.orm import Session
 
+from app.core.exceptions import AppException
 from app.db.session import get_db
 from app.schemas.project import (
+    PROJECT_SLUG_PATTERN,
     ProjectDetailResponse,
     ProjectListResponse,
 )
@@ -23,12 +25,21 @@ DatabaseSession = Annotated[
     Depends(get_db),
 ]
 
+ProjectSlug = Annotated[
+    str,
+    Path(
+        min_length=1,
+        max_length=100,
+        pattern=PROJECT_SLUG_PATTERN,
+    ),
+]
+
 
 @router.get(
     "",
     response_model=ProjectListResponse,
 )
-async def list_projects(
+def list_projects(
     db: DatabaseSession,
 ) -> ProjectListResponse:
     projects = get_all_projects(db)
@@ -43,8 +54,8 @@ async def list_projects(
     "/{slug}",
     response_model=ProjectDetailResponse,
 )
-async def read_project(
-    slug: str,
+def read_project(
+    slug: ProjectSlug,
     db: DatabaseSession,
 ) -> ProjectDetailResponse:
     project = get_project_by_slug(
@@ -53,9 +64,10 @@ async def read_project(
     )
 
     if project is None:
-        raise HTTPException(
+        raise AppException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
+            code="PROJECT_NOT_FOUND",
+            message="Project not found",
         )
 
     return ProjectDetailResponse(

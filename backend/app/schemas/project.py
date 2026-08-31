@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+PROJECT_SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
+
 ProjectStatus = Literal[
     "in_development",
     "active",
@@ -19,7 +21,7 @@ class ProjectSummary(BaseModel):
     slug: str = Field(
         min_length=1,
         max_length=100,
-        pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        pattern=PROJECT_SLUG_PATTERN,
     )
     title: str
     summary: str

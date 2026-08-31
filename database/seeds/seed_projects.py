@@ -3,7 +3,6 @@ from sqlalchemy import select
 from backend.app.db.session import SessionLocal
 from backend.app.models.project import Project
 
-
 PROJECTS = [
     {
         "slug": "ourprj-web",
@@ -68,27 +67,18 @@ def seed_projects() -> None:
     with SessionLocal() as db:
         for project_data in PROJECTS:
             existing_project = db.scalar(
-                select(Project).where(
-                    Project.slug
-                    == project_data["slug"]
-                )
+                select(Project).where(Project.slug == project_data["slug"])
             )
 
             if existing_project is not None:
-                print(
-                    f"Skipping existing project: "
-                    f"{project_data['slug']}"
-                )
+                print(f"Skipping existing project: {project_data['slug']}")
                 continue
 
             project = Project(**project_data)
 
             db.add(project)
 
-            print(
-                f"Adding project: "
-                f"{project_data['slug']}"
-            )
+            print(f"Adding project: {project_data['slug']}")
 
         db.commit()
 
