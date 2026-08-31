@@ -2,7 +2,7 @@ import logging
 
 from app.schemas.contact import ContactRequest
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("ourprj.contact")
 
 
 def process_contact_submission(

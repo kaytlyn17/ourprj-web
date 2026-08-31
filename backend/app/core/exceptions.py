@@ -12,7 +12,7 @@ from app.schemas.error import (
     ErrorResponse,
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("ourprj.exceptions")
 
 
 class AppException(Exception):

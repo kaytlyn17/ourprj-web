@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
-from backend.app.db.session import SessionLocal
-from backend.app.models.project import Project
+from app.db.session import SessionLocal
+from app.models.project import Project
 
 PROJECTS = [
     {
@@ -54,7 +54,10 @@ PROJECTS = [
             "Windows",
         ],
         "details": [
-            "Virtualized infrastructure used to simulate multiple systems and security zones.",
+            (
+                "Virtualized infrastructure used to simulate multiple systems "
+                "and security zones."
+            ),
             "Centralized security monitoring using Wazuh.",
             "Network visibility and IDS capabilities using Suricata.",
             "Firewalling and network segmentation using pfSense.",

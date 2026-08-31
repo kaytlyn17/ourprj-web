@@ -4,13 +4,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.router import api_router
 from app.core.config import settings
 from app.core.exceptions import register_exception_handlers
+from app.core.logging import configure_logging
+from app.core.middleware import register_http_middleware
+
+configure_logging()
 
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     description="Backend API for OurPrj Web.",
 )
-
+register_http_middleware(app)
 register_exception_handlers(app)
 
 app.add_middleware(
