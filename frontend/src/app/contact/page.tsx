@@ -27,8 +27,7 @@ export default function ContactPage() {
           </p>
 
           <p className="mt-8 text-sm leading-6 text-zinc-600">
-            The contact backend is not connected yet. This form currently
-            demonstrates the frontend interaction only.
+            Messages are validated before being accepted by the backend.
           </p>
         </div>
 

@@ -5,15 +5,53 @@ import {
   useState,
 } from "react";
 
-export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+import { submitContact } from "@/lib/client-api";
 
-  function handleSubmit(
+
+type SubmitState =
+  | "idle"
+  | "submitting"
+  | "success"
+  | "error";
+
+
+export default function ContactForm() {
+  const [submitState, setSubmitState] =
+    useState<SubmitState>("idle");
+
+  async function handleSubmit(
     event: SubmitEvent<HTMLFormElement>
   ) {
     event.preventDefault();
 
-    setSubmitted(true);
+    const form = event.currentTarget;
+
+    const formData = new FormData(form);
+
+    setSubmitState("submitting");
+
+    try {
+      await submitContact({
+        name: String(
+          formData.get("name") ?? ""
+        ),
+        email: String(
+          formData.get("email") ?? ""
+        ),
+        message: String(
+          formData.get("message") ?? ""
+        ),
+        website: String(
+          formData.get("website") ?? ""
+        ),
+      });
+
+      form.reset();
+
+      setSubmitState("success");
+    } catch {
+      setSubmitState("error");
+    }
   }
 
   return (
@@ -75,17 +113,42 @@ export default function ContactForm() {
         />
       </div>
 
+      <div
+        className="absolute left-[-10000px]"
+        aria-hidden="true"
+      >
+        <label htmlFor="website">
+          Website
+        </label>
+
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <button
         type="submit"
-        className="mt-6 rounded-lg bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-zinc-200"
+        disabled={submitState === "submitting"}
+        className="mt-6 rounded-lg bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Send message
+        {submitState === "submitting"
+          ? "Sending..."
+          : "Send message"}
       </button>
 
-      {submitted && (
-        <p className="mt-5 text-sm leading-6 text-zinc-400">
-          Frontend form submitted successfully. Backend delivery will be
-          connected later.
+      {submitState === "success" && (
+        <p className="mt-5 text-sm text-zinc-400">
+          Your message was received successfully.
+        </p>
+      )}
+
+      {submitState === "error" && (
+        <p className="mt-5 text-sm text-red-400">
+          Something went wrong. Please try again.
         </p>
       )}
     </form>
