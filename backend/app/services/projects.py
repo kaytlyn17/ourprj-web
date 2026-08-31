@@ -7,23 +7,15 @@ from app.models.project import Project
 def get_all_projects(
     db: Session,
 ) -> list[Project]:
-    statement = (
-        select(Project)
-        .order_by(Project.id)
-    )
+    statement = select(Project).order_by(Project.id)
 
-    return list(
-        db.scalars(statement).all()
-    )
+    return list(db.scalars(statement).all())
 
 
 def get_project_by_slug(
     db: Session,
     slug: str,
 ) -> Project | None:
-    statement = (
-        select(Project)
-        .where(Project.slug == slug)
-    )
+    statement = select(Project).where(Project.slug == slug)
 
     return db.scalar(statement)

@@ -4,7 +4,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-
 from app.schemas.project import (
     ProjectDetailResponse,
     ProjectListResponse,
@@ -13,7 +12,6 @@ from app.services.projects import (
     get_all_projects,
     get_project_by_slug,
 )
-
 
 router = APIRouter(
     prefix="/projects",
@@ -24,6 +22,7 @@ DatabaseSession = Annotated[
     Session,
     Depends(get_db),
 ]
+
 
 @router.get(
     "",

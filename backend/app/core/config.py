@@ -4,6 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parents[2]
 
+
 class Settings(BaseSettings):
     app_name: str = "OurPrj API"
     app_version: str = "0.1.0"

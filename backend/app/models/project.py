@@ -10,8 +10,7 @@ class Project(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "status IN "
-            "('in_development', 'active', 'completed', 'archived')",
+            "status IN ('in_development', 'active', 'completed', 'archived')",
             name="ck_projects_status",
         ),
     )
