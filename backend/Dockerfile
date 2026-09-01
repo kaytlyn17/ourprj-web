@@ -5,14 +5,19 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN addgroup --system app \
+    && adduser --system --ingroup app app
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY alembic.ini .
-COPY migrations ./migrations
-COPY app ./app
-COPY scripts ./scripts
+COPY --chown=app:app alembic.ini .
+COPY --chown=app:app migrations ./migrations
+COPY --chown=app:app app ./app
+COPY --chown=app:app scripts ./scripts
+
+USER app
 
 EXPOSE 8000
 
