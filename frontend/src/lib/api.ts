@@ -6,19 +6,25 @@ import type {
 } from "@/types/project";
 
 
-const API_BASE_URL = process.env.API_BASE_URL;
+function getApiBaseUrl(): string {
+  const apiBaseUrl =
+    process.env.API_BASE_URL;
 
+  if (!apiBaseUrl) {
+    throw new Error(
+      "API_BASE_URL environment variable is not configured."
+    );
+  }
 
-if (!API_BASE_URL) {
-  throw new Error(
-    "API_BASE_URL environment variable is not configured."
-  );
+  return apiBaseUrl;
 }
 
 
-export async function getProjects(): Promise<ProjectSummary[]> {
+export async function getProjects(): Promise<
+  ProjectSummary[]
+> {
   const response = await fetch(
-    `${API_BASE_URL}/api/v1/projects`,
+    `${getApiBaseUrl()}/api/v1/projects`,
     {
       cache: "no-store",
     }
@@ -41,7 +47,7 @@ export async function getProjectBySlug(
   slug: string
 ): Promise<ProjectDetail | null> {
   const response = await fetch(
-    `${API_BASE_URL}/api/v1/projects/${slug}`,
+    `${getApiBaseUrl()}/api/v1/projects/${slug}`,
     {
       cache: "no-store",
     }

@@ -3,6 +3,8 @@ import PageHeader from "@/components/layout/PageHeader";
 
 import { getProjects } from "@/lib/api";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsPage() {
   const projects = await getProjects();
 

@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import { getProjectBySlug } from "@/lib/api";
 import { formatProjectStatus } from "@/lib/utils";
 
+
+export const dynamic = "force-dynamic";
+
 type ProjectPageProps = {
   params: Promise<{
     slug: string;
