@@ -69,7 +69,7 @@ services:
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN}
 
     ports:
-      - "8000:8000"
+      - "${BACKEND_BIND_HOST:-127.0.0.1}:8000:8000"
 
     networks:
       - app_net
@@ -120,7 +120,7 @@ services:
       API_BASE_URL: http://backend:8000
 
     ports:
-      - "3000:3000"
+      - "${FRONTEND_BIND_HOST:-127.0.0.1}:3000:3000"
 
     networks:
       - app_net  
