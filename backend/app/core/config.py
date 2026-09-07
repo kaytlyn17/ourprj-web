@@ -4,7 +4,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parents[2]
 
-redis_url: str = "redis://redis:6379/0"
 
 class Settings(BaseSettings):
     app_name: str = "OurPrj API"
@@ -13,6 +12,7 @@ class Settings(BaseSettings):
     frontend_origin: str = "http://localhost:3000"
 
     database_url: str
+    redis_url: str = "redis://redis:6379/0"
 
     model_config = SettingsConfigDict(
         env_file=BACKEND_DIR / ".env",
